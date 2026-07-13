@@ -18,3 +18,20 @@ double Environment::getVariable(const std::string &name) const {
         return fn -> second; // second = value (number), first = name ("a")
     }
 }
+
+void Environment::setFunction(const FunctionSymbol &func) {
+    if (functions.find(func.name) != functions.end()) {
+        throw std::runtime_error("Function: " + func.name + " is already exists!");
+    } else {
+        functions[func.name] = func;
+    }
+}
+
+FunctionSymbol Environment::getFunction(const std::string &name) const {
+    auto ff = functions.find(name);
+    if (ff == functions.end()) {
+        throw std::runtime_error("Undefined function: " + name);
+    } else {
+        return ff -> second;
+    }
+}
