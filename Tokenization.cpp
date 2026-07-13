@@ -61,6 +61,10 @@ std::vector<Token> Tokenization::tokenize(const std::string& input) {
             tokens.push_back(Token{TokensType::Comma, std::string(1, c)});
         } else if (c == '.') {
             tokens.push_back(Token{TokensType::Dot, std::string(1, c)});
+        } else if (c == '{') {
+            tokens.push_back(Token{TokensType::LeftCurly, std::string(1, c)});
+        } else if (c == '}') {
+            tokens.push_back(Token{TokensType::RightCurly, std::string(1, c)});
         }
     }
     return tokens;
