@@ -5,40 +5,54 @@
 #include "Evaluator.h"
 
 int main() {
+    Environment environment;
+    ShuntingYard shunting_yard;
+    Evaluator evaluator;
     Tokenization tokenization;
-    std::string testInput = "var a = max(5, 3) * 2";
-    auto tokens = tokenization.tokenize(testInput);
 
-    for (const auto& token : tokens) {
-        std::cout << "Token: " << token.value << std::endl;
-    }
+    std::string input;
+    std::cout << "> ";
 
-    try {
-        Environment env;
-        env.setVariable("a", 10.0);
-
-        std::string expression = "max(a, 5) + 3 * 2";
-        std::cout << "Original Expression: " << expression << std::endl;
-
-        Tokenization tok;
-        auto tokens = tok.tokenize(expression);
-
-        ShuntingYard sy;
-        auto rpn = sy.parseToRPN(tokens);
-
-        Evaluator evaluator;
-        double result = evaluator.evaluate(rpn, env);
-
-        std::cout << "RPN Output: ";
-        for (const auto& token : rpn) {
-            std::cout << token.value << " ";
+    while (std::getline(std::cin, input)) {
+        if (input == "exit" || input == "quit") {
+            break;
         }
-        std::cout << std::endl;
 
-        std::cout << "Final Result: " << result << std::endl;
+        if (input.empty()) {
+            std::cout << "> ";
+            continue;
+        }
 
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        try {
+            std::vector<Token> tokens = tokenization.tokenize(input);
+            if (tokens.empty()) {
+                std::cout << "> ";
+                continue;
+            }
+
+            if (tokens[0].type == TokensType::KeywordVar) {
+                if (tokens.size() < 4 || tokens[1].type != TokensType::Variable || tokens[2].type != TokensType::Assign) {
+                    throw std::runtime_error("Syntax error in variable declaration.");
+                }
+
+                std::string varName = tokens[1].value;
+
+                std::vector<Token> expressionTokens(tokens.begin() + 3, tokens.end());
+
+                auto rpn = shunting_yard.parseToRPN(expressionTokens);
+                double value = evaluator.evaluate(rpn, environment);
+
+                environment.setVariable(varName, value);
+            } else {
+                auto rpn = shunting_yard.parseToRPN(tokens);
+                double valueResult = evaluator.evaluate(rpn, environment);
+                std::cout << valueResult << std::endl;
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+
+        std::cout << "> ";
     }
     return 0;
 }
