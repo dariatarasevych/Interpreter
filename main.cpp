@@ -2,6 +2,7 @@
 #include "Tokenization.h"
 #include "Environment.h"
 #include "ShuntingYard.h"
+#include "Evaluator.h"
 
 int main() {
     Tokenization tokenization;
@@ -25,11 +26,17 @@ int main() {
         ShuntingYard sy;
         auto rpn = sy.parseToRPN(tokens);
 
+        Evaluator evaluator;
+        double result = evaluator.evaluate(rpn, env);
+
         std::cout << "RPN Output: ";
         for (const auto& token : rpn) {
             std::cout << token.value << " ";
         }
         std::cout << std::endl;
+
+        std::cout << "Final Result: " << result << std::endl;
+
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }

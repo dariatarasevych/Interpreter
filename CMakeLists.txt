@@ -8,4 +8,8 @@ add_executable(assignment_5 main.cpp
         Tokenization.cpp
         Tokenization.h
         Environment.cpp
-        Environment.h)
+        Environment.h
+        ShuntingYard.cpp
+        ShuntingYard.h
+        Evaluator.cpp
+        Evaluator.h)
