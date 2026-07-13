@@ -24,6 +24,8 @@ public:
 
     void setFunction(const FunctionSymbol& func);
     FunctionSymbol getFunction(const std::string& name) const;
+
+    bool hasFunction(const std::string& name) const;
 };
 
 #endif //ASSIGNMENT_5_ENVIRONMENT_H

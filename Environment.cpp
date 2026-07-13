@@ -35,3 +35,7 @@ FunctionSymbol Environment::getFunction(const std::string &name) const {
         return ff -> second;
     }
 }
+
+bool Environment::hasFunction(const std::string& name) const {
+    return functions.find(name) != functions.end();
+}
