@@ -40,6 +40,9 @@ std::vector<Token> Tokenization::tokenize(const std::string& input) {
             if (word == "var") {
                 tokens.push_back(Token{TokensType::KeywordVar, word});
             }
+            else if (word == "def") {
+                tokens.push_back(Token{TokensType::KeywordDef, word});
+            }
             else if (word == "max" || word == "min" || word == "pow" || word == "abs") {
                 tokens.push_back(Token{TokensType::FunctionName, word});
             }

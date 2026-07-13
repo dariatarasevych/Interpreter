@@ -2,13 +2,36 @@
 #include <cmath>
 #include <algorithm>
 
-double Evaluator::evaluate(const std::vector<Token>& rpnTokens, const Environment &env) {
+double Evaluator::evaluate(const std::vector<Token> &rpnTokens, const Environment &env) {
     std::stack<double> valuesStack;
-    for (const auto& token : rpnTokens) {
+    for (const auto &token: rpnTokens) {
         if (token.type == TokensType::Number) {
             valuesStack.push(std::stod(token.value)); //String TO Double
         } else if (token.type == TokensType::Variable) {
-            valuesStack.push(env.getVariable(token.value));
+            if (env.hasFunction(token.value)) {
+                FunctionSymbol func = env.getFunction(token.value);
+
+                if (valuesStack.size() < func.parameters.size()) {
+                    throw std::runtime_error("Not enough arguments for function: " + func.name);
+                }
+
+                std::vector<double> args(func.parameters.size());
+
+                for (int j = (int) func.parameters.size() - 1; j >= 0; --j) {
+                    args[j] = valuesStack.top();
+                    valuesStack.pop();
+                }
+
+                Environment tempEnv = env;
+                for (int j = 0; j < func.parameters.size(); ++j) {
+                    tempEnv.setVariable(func.parameters[j], args[j]);
+                }
+
+                double result = evaluate(func.RPNtokens, tempEnv);
+                valuesStack.push(result);
+            } else {
+                valuesStack.push(env.getVariable(token.value));
+            }
         } else if (token.type == TokensType::Operator) {
             if (valuesStack.size() < 2) {
                 throw std::runtime_error("Invalid expression.");
@@ -41,8 +64,7 @@ double Evaluator::evaluate(const std::vector<Token>& rpnTokens, const Environmen
                 valuesStack.pop();
 
                 valuesStack.push(std::abs(a));
-            }
-            else if (token.value == "max" || token.value == "min" || token.value == "pow") {
+            } else if (token.value == "max" || token.value == "min" || token.value == "pow") {
                 if (valuesStack.size() < 2) {
                     throw std::runtime_error("Invalid expression.");
                 }
@@ -57,8 +79,7 @@ double Evaluator::evaluate(const std::vector<Token>& rpnTokens, const Environmen
                     valuesStack.push(std::max(a, b));
                 } else if (token.value == "min") {
                     valuesStack.push(std::min(a, b));
-                }
-                else if (token.value == "pow") {
+                } else if (token.value == "pow") {
                     valuesStack.push(std::pow(a, b));
                 }
             }
