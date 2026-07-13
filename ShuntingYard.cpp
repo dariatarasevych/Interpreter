@@ -15,9 +15,17 @@ std::vector<Token> ShuntingYard::parseToRPN(const std::vector<Token> &tokens) {
     std::vector<Token> outputQueue;
     std::stack<Token> operatorStack;
 
-    for (const auto& token : tokens) {
-        if (token.type == TokensType::Number || token.type == TokensType::Variable) {
+    for (int i = 0; i < tokens.size(); i++) {
+        const auto& token = tokens[i];
+
+        if (token.type == TokensType::Number) {
             outputQueue.push_back(token);
+        }else if (token.type == TokensType::Variable) {
+            if (i + 1 < tokens.size() && tokens[i + 1].type == TokensType::LeftParen) {
+                operatorStack.push(token);
+            } else {
+                outputQueue.push_back(token);
+            }
         } else if (token.type == TokensType::FunctionName) {
             operatorStack.push(token);
         } else if (token.type == TokensType::Comma) {
