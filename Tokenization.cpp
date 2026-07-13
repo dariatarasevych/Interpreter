@@ -11,9 +11,18 @@ std::vector<Token> Tokenization::tokenize(const std::string& input) {
 
         if (std::isspace(c)) {continue;}
 
+        bool isUnaryMinus = (c == '-' && (tokens.empty() || tokens.back().type == TokensType::LeftParen || tokens.back().type == TokensType::RightParen || tokens.back().type == TokensType::Operator));
+
+
         // щоб зібралося ціле число, а не кожна цифра окремо
-        if (std::isdigit(c)) {
+        if (std::isdigit(c) || isUnaryMinus) {
             std::string numbersStr ="";
+
+            if (c == '-') {
+                numbersStr += input[i];
+                i++;
+            }
+
             while (i < input.length() && (std::isdigit(input[i]) || input[i] == '.')) {
                 numbersStr += input[i];
                 i++;
@@ -24,7 +33,7 @@ std::vector<Token> Tokenization::tokenize(const std::string& input) {
 
         else if (std::isalpha(c)) {
             std::string word ="";
-            while (i < input.length() && (std::isalpha(input[i]) || input[i] == '_')) {
+            while (i < input.length() && (std::isalnum(input[i]) || input[i] == '_')) {
                 word += input[i];
                 i++;
             }
