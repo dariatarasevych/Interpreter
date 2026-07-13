@@ -13,7 +13,10 @@ enum class TokensType{
     Assign,
     FunctionName,
     KeywordVar,
-    Variable
+    Variable,
+    KeywordDef,
+    LeftCurly,
+    RightCurly
 };
 
 struct Token {
