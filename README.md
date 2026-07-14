@@ -68,7 +68,7 @@ Custom functions (FunctionSymbol) store parameter signature vectors alongside pa
 - Screenshots:
 <img width="488" height="269" alt="Знімок екрана 2026-07-14 о 23 12 34" src="https://github.com/user-attachments/assets/663baaea-2de2-4b0b-8f05-4be244ac90df" />
 
-## 6. Conclusion:
+## 5. Conclusion:
 The developed project successfully fulfills the assignment requirements by implementing a simple C++ interpreter that supports elements of declarative and functional paradigms. 
 The system reliably evaluates arithmetic expressions, built-in functions (pow, abs, max, min), and user-defined functions. 
 Furthermore, by enforcing variable immutability (disallowing re-assignment after a var declaration), the interpreter maintains a core functional programming principle. 
