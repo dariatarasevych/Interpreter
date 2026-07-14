@@ -11,8 +11,7 @@ std::vector<Token> Tokenization::tokenize(const std::string& input) {
 
         if (std::isspace(c)) {continue;}
 
-        bool isUnaryMinus = (c == '-' && (tokens.empty() || tokens.back().type == TokensType::LeftParen || tokens.back().type == TokensType::RightParen || tokens.back().type == TokensType::Operator));
-
+        bool isUnaryMinus = (c == '-' && (tokens.empty() || tokens.back().type == TokensType::LeftParen || tokens.back().type == TokensType::Operator));
 
         // щоб зібралося ціле число, а не кожна цифра окремо
         if (std::isdigit(c) || isUnaryMinus) {

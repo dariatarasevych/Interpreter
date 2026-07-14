@@ -49,7 +49,7 @@ std::vector<Token> ShuntingYard::parseToRPN(const std::vector<Token> &tokens) {
             if (!operatorStack.empty() && operatorStack.top().type == TokensType::LeftParen) {
                 operatorStack.pop();
             }
-            if (!operatorStack.empty() && operatorStack.top().type == TokensType::FunctionName) {
+            if (!operatorStack.empty() && operatorStack.top().type == TokensType::FunctionName || operatorStack.top().type == TokensType::Variable) {
                 outputQueue.push_back(operatorStack.top());
                 operatorStack.pop();
             }
