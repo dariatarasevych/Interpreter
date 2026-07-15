@@ -68,6 +68,14 @@ Custom functions (FunctionSymbol) store parameter signature vectors alongside pa
 - Screenshots:
 <img width="488" height="269" alt="Знімок екрана 2026-07-14 о 23 12 34" src="https://github.com/user-attachments/assets/663baaea-2de2-4b0b-8f05-4be244ac90df" />
 
+**Test Case 5: Higher-order integral(f, a, b)**
+
+- Actions: Define custom single-parameter function def parabola(x) { x * x } $\rightarrow$ Call integral(parabola, 0, 6)
+
+- Screenshots:
+<img width="412" height="70" alt="Знімок екрана 2026-07-15 о 14 24 42" src="https://github.com/user-attachments/assets/966282f4-f017-4a3b-a6ca-d93e9bf001a8" />
+
+
 ## 5. Conclusion:
 The developed project successfully fulfills the assignment requirements by implementing a simple C++ interpreter that supports elements of declarative and functional paradigms. 
 The system reliably evaluates arithmetic expressions, built-in functions (pow, abs, max, min), and user-defined functions. 
