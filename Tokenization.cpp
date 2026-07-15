@@ -42,7 +42,7 @@ std::vector<Token> Tokenization::tokenize(const std::string& input) {
             else if (word == "def") {
                 tokens.push_back(Token{TokensType::KeywordDef, word});
             }
-            else if (word == "max" || word == "min" || word == "pow" || word == "abs") {
+            else if (word == "max" || word == "min" || word == "pow" || word == "abs" || word == "integral") {
                 tokens.push_back(Token{TokensType::FunctionName, word});
             }
             else {
